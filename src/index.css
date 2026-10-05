@@ -1,0 +1,125 @@
+/* @import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+#container {
+  width: 80%;
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  padding: 0;
+  z-index: 1;
+} */
+
+
+@import "tailwindcss";
+
+/* Dark mode is toggled by a `dark` class on <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Theme tokens ---------- */
+:root {
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --ink: #0e1a33;
+  --muted: #4a5875;
+  --line: #d9e0ef;
+  --accent: #2b5cf0;
+  --accent-soft: #e1e9ff;
+  --accent-ink: #ffffff;
+  --ok: #1fa971;
+  --code-bg: #0e1a33;
+  --glow: rgba(43, 92, 240, 0.18);
+}
+
+.dark {
+  --bg: #0a1020;
+  --surface: #111a31;
+  --ink: #e8eefc;
+  --muted: #9aa8c7;
+  --line: #23314f;
+  --accent: #6b92ff;
+  --accent-soft: #1b2850;
+  --accent-ink: #0a1020;
+  --ok: #3ddc97;
+  --code-bg: #0c1530;
+  --glow: rgba(91, 134, 255, 0.22);
+}
+
+/* Expose the tokens as Tailwind colors: bg-bg, bg-surface, text-ink, text-muted, border-line, bg-accent ... */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-ok: var(--ok);
+  --color-code: var(--code-bg);
+
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  scroll-padding-top: 88px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Faint grid + glow behind the hero */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 72%);
+  mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 72%);
+  opacity: 0.7;
+}
+
+.hero-glow {
+  background: radial-gradient(closest-side, var(--glow), transparent);
+}
+
+/* The one animated moment: the API response prints in line by line */
+@media (prefers-reduced-motion: no-preference) {
+  .print-line {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: print 0.4s ease forwards;
+    animation-delay: calc(0.35s + var(--i) * 0.14s);
+  }
+
+  @keyframes print {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
